@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100%;
+            background-image: url("https://thumbs.gfycat.com/BriefIgnorantBlackbuck-size_restricted.gif");
+            background-repeat:repeat;
+            background-size:70%;
+            background-position: center;
+            
+        }
+        #img1{
+           width: 30%;
+           margin:auto;
+           margin-top:6%;
+           display: grid;
+           align-items: center;
+        }
+        #img1>img{
+            width: 200px;
+           height:90px;
+           margin-left: 25%;
+        }
+        #input{
+            width: 600px;
+            margin-left: -70px;
+            height: 50px;
+            margin-top: 30px;
+            border-radius: 15px;
+            background-color:rgb(27, 27, 27) ;
+            font-size: 20px;
+        }
+        #img2{
+            border-radius: 40px;
+            width: 40px;
+            position:absolute;
+            left:66%;
+            bottom: 49.8%;
+        }
+
+        #icon{
+            margin-left: 90%;
+            font-size: 50px;
+            color: yellow;
+            margin-top: 60px;
+        }
+        #append>h1{
+            text-align: center;
+            color: #ffeb00;
+        }
+        #append>div{
+            width: 430px;
+            margin: auto;
+            margin-top:2%;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            text-align: center;
+        }
+        #append>div>div{
+            height: 210px;
+            border: 1px solid #ffeb00;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        h2{
+            color:#ffeb00;
+            cursor: pointer;
+        }
+        #append>div>div:hover,h2:hover,h3:hover{
+            color: white;
+            cursor: pointer;
+            border-color: white;
+        }
+        h3{
+            color:#ffeb00;
+            cursor: pointer;
+        }
+        /* h3:hover{
+            color: white;
+        } */
+        #goBack{
+            margin: auto;
+            color: #ffeb00;
+            text-align: center;
+            margin-top: 40PX;
+            border: 1PX solid #ffeb00;
+            width: 100px;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #goBack:hover{
+            color: white;
+            cursor: pointer;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+   
+    <audio id="mysong">
+        <source src="starWar.mp3.mp3" type="audio/mp3">
+    </audio>
+
+
+
+    <div id="back"></div>
+    <h1 id="icon">🔇</h1>
+    <div id="append">
+    </div>
+    <a style="text-decoration:none;" href="index.html"><h2 id="goBack">Go Back</h2></a>        
+    
+    
+</div>
+
+</body>
+</html>
+<script>
+
+
+let mysong=document.getElementById("mysong");
+ let icon=document.getElementById("icon");
+
+
+ icon.onclick = function (){
+    if(mysong.paused){
+        mysong.play()
+        icon.innerText="🔊";
+    }else{
+        mysong.pause()
+        icon.innerText="🔇";
+    }
+        
+  
+ }
+
+
+
+    let detail=JSON.parse(localStorage.getItem("Details")) || [];
+    append(detail)
+
+    function append(data){
+    data.forEach(function(el){
+        let container=document.getElementById("append");
+        container.innerHTML=null;
+
+        let h1=document.createElement("h1");
+        h1.innerText=el.name;
+
+        let div=document.createElement("div");
+    
+        let div2=document.createElement("div");
+        let h2=document.createElement("h2");
+        h2.innerText="Personal Info";
+
+        let h3=document.createElement("h3");
+        h3.innerText=`Birth Year : ${el.birth_year}`;
+
+        let h3i=document.createElement("h3");
+        h3i.innerText=`Gender : ${el.gender}`;
+
+        let h3ii=document.createElement("h3");
+        h3ii.innerText=`Height : ${el.height}`;
+        div2.append(h2,h3,h3i,h3ii);
+
+        let div3=document.createElement("div");
+        let h=document.createElement("h2");
+        h.innerText="Anatomy";
+
+        let hi=document.createElement("h3");
+        hi.innerText=`Eye Color : ${el.eye_color}`;
+
+        let hii=document.createElement("h3");
+        hii.innerText=`Mass : ${el.mass}`;
+
+        let hiii=document.createElement("h3");
+        hiii.innerText=`Hair Color : ${el.hair_color}`;
+        div3.append(h,hi,hii,hiii);
+
+        div.append(div2,div3);
+        document.getElementById("append").append
+        container.append(h1,div);
+    });
+}
+
+
+</script>

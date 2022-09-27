@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100%;
+            background-image: url("https://thumbs.gfycat.com/BriefIgnorantBlackbuck-size_restricted.gif");
+            background-repeat:repeat;
+            background-size:70%;
+            background-position: center;
+            
+        }
+        #img1{
+           width: 30%;
+           margin:auto;
+           margin-top:4%;
+           display: grid;
+           align-items: center;
+        }
+        #img1>img{
+            width: 200px;
+           height:90px;
+           margin-left: 25%;
+        }
+        #input{
+            width: 614px;
+            margin-left: -70px;
+            height: 50px;
+            margin-top: 30px;
+            border-radius: 15px;
+            background-color:rgb(27, 27, 27) ;
+            font-size: 20px;
+            padding-left: 10px;
+            color: white;
+        }
+        #img2{
+            border-radius: 40px;
+            width: 40px;
+            position:absolute;
+            left:66%;
+            bottom: 51.6%;
+        }
+
+        #icon{
+            margin-left: 90%;
+            font-size: 50px;
+            margin-top: 60px;
+            cursor: pointer;
+        }
+        #append{
+            width: 610px;
+            padding-bottom: 6px;
+            margin: auto;
+            margin-left: 30.5%;
+            border-radius: 6px;
+            background-color:rgb(27, 27, 27) ;
+            font-size: 20px;
+            margin-top: 1px;
+            color: white;
+            display: grid;
+            gap: 5px;
+            display: none;
+        }
+        #append>div{
+            color: white;
+            height: 70%;
+            width: 95%;
+            margin: auto;
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            justify-content: space-between;
+            height: 50px;
+            border-radius: 10px;
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+            
+        }
+        #append>div>div:last-child{
+            text-align: right;
+            height: 50px;
+        }
+        h5{
+            margin-top: 3px;
+            margin-bottom: 0px;
+            color: yellow;
+            font-size: 18px;
+        }
+        h6{
+            margin-top: 4px;
+            color: rgb(138, 130, 130);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="mysong">
+        <source src="starWar.mp3.mp3" type="audio/mp3">
+    </audio>
+
+
+
+    <div id="back"></div>
+    <h1 id="icon">🔇</h1>
+    <div id="img1">
+    <img  src="https://i.postimg.cc/bwWm7xpQ/download.png" alt="">
+    <input oninput="debounce(input,400)" id="input" type="search" placeholder="   Search characters" >
+</div>
+<img id="img2" onclick="debounce(input,400)" src="https://i.postimg.cc/GmTSX7GF/download.png" alt="">
+<div id="append">    
+</div>    
+</div>
+</body>
+</html>
+
+<script>
+
+ let mysong=document.getElementById("mysong");
+ let icon=document.getElementById("icon");
+
+
+ icon.onclick = function (){
+    if(mysong.paused){
+        mysong.play()
+        icon.innerText="🔊";
+    }else{
+        mysong.pause()
+        icon.innerText="🔇";
+    }
+        
+  
+ }
+ 
+
+
+
+
+
+
+
+
+
+let detail=JSON.parse(localStorage.getItem("Details")) || [];
+function input(){
+
+    let container=document.getElementById("append");
+    let name=document.getElementById("input").value;
+    if(name.length==0){
+        container.innerHTML=null;
+    }else{
+    let url=`https://swapi.dev/api/people/?search=${name}`;
+
+    fetch(url)
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(res){
+        console.log(res.results);
+        append(res.results)
+    })
+    .catch(function(err){
+        console.log(err);
+    })
+
+}
+}
+//let inputdata=JSON.parse(localStorage.setItem("inputData")) || [];
+
+function append(data){
+    data.forEach(function(el){
+        let container=document.getElementById("append");
+        container.innerHTML=null;
+        container.style.display="block";
+        container.style.display="grid";
+        let div=document.createElement("div");
+        div.addEventListener("click",function(){
+            details(el);
+        });
+        let div2=document.createElement("div");
+        let h5=document.createElement("h5");
+        h5.innerText=el.name;
+        let h6=document.createElement("h6");
+        h6.innerText=el.birth_year;
+        div2.append(h5,h6);
+
+        let div3=document.createElement("div");
+        let h66=document.createElement("h6");
+        h66.innerText=el.gender;
+        div3.append(h66);
+
+
+        div.append(div2,div3);
+        document.getElementById("append").append
+        container.append(div);
+    });
+}
+
+function details(el){
+ detail.push(el);
+ localStorage.setItem("Details",JSON.stringify(detail));
+ window.location.href="Star war2.html";
+}
+
+let id;
+    
+    function debounce(func,delay){
+        if(id){
+            clearTimeout(id);
+        }
+        id=setTimeout(function(){
+            func()
+        }, delay);
+    }
+
+
+// birth_year: "unknown"
+// created: "2014-12-20T18:44:01.103000Z"
+// edited: "2014-12-20T21:17:50.486000Z"
+// eye_color: "black"
+// films: (2) ['https://swapi.dev/api/films/5/', 'https://swapi.dev/api/films/6/']
+// gender: "female"
+// hair_color: "none"
+// height: "178"
+// homeworld: "https://swapi.dev/api/planets/58/"
+// mass: "57"
+// name: "Shaak Ti"
+// skin_color: "red, blue, white"
+// species: ['https://swapi.dev/api/species/35/']
+// starships: []
+// url: "https://swapi.dev/api/people/78/"
+// vehicles: []
+
+
+</script>
